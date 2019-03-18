@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package NammStandards;
+
+enum TermCode {
+  TermCodeUndefined = 0;
+  P001 = 1;
+  P002 = 2;
+  P003 = 3;
+}
+
+enum QuantityUOM {
+  QuantityUOMUndefined = 0;
+  BAG = 1;
+  BKT = 2;
+  BND = 3;
+  BOWL = 4;
+  BX = 5;
+  CRD = 6;
+  CM = 7;
+  CS = 8;
+  CTN = 9;
+  DZ = 10;
+  EA = 11;
+}
+
+message NammPoData {
+  string id = 1;
+  string timestamp = 2;
+
+  PoHeaderData header = 10;
+  PoDetailData detail = 11;
+}
+
+message PoHeaderData {
+  string buyer_order_id = 1;
+  string ship_instructions = 2;
+
+  PartyData bill_to = 10;
+  PartyData ship_to = 11;
+  PartyData sold_to = 12;
+  PartyData supplier = 13;
+  TermsData terms = 14;
+}
+
+message PoDetailData {
+  repeated ItemData items = 10;
+}
+
+message AddressData {
+  string attn = 1;
+  string address_1 = 2;
+  string address_2 = 3;
+  string address_3 = 4;
+  string city = 5;
+  string state = 6;
+  string postal_code = 7;
+  string country = 8;
+  string country_code = 9;
+}
+
+message ItemData {
+  string buyer_item_id = 1;
+  string buyer_item_desc = 2;
+
+  QuantityData quantity = 10;
+  PartyData ship_to = 11;
+}
+
+message PartyData {
+ string party_id = 1;
+ string name = 2;
+ AddressData address = 10;
+}
+
+message TermsData {
+  TermCode code = 1;
+  string date = 2;
+  int32 days = 3;
+  int32 percent = 4;
+  int32 percent_days = 5;
+}
+
+message QuantityData {
+  int32 units = 1;
+  QuantityUOM units_of_measure = 2;
+}
